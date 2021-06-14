@@ -1,40 +1,24 @@
-class Sort:
-    def quicksort(self,a,p,r):
-        if p < r:
-            q = self.hoarePartition(a,p,r)
-            self.quicksort(a,p,q-1)
-            self.quicksort(a,q+1,r)
-    
-    def partition(self,a,p,r):
-        i=p-1
-        x=a[r]
-        for j in range(p,r):
-            if a[j] <= x:
-                i+=1
-                temp = a[i]
-                a[i] = a[j]
-                a[j] = temp
-        temp = a[i+1]
-        a[i+1] = a[r]
-        a[r] = temp
-        return i+1
-    
-    def hoarePartition(self,a,p,r):
-        x=a[p]
-        i=p
-        j=r
-        while 1:
-            while a[j] > x:
-                j-=1
-            while a[i] < x:
-                i+=1
-            if i < j:
-                temp = a[i]
-                a[i] = a[j]
-                a[j] = temp
-            else:
-                return j
+def quicksort(arr, low, high):
+    if low < high:
+        q = partition(arr, low, high)
+        quicksort(arr, low, q-1)
+        quicksort(arr, q+1, high)
 
-arr = [2,8,7,1,3,5,6,4]
-Sort().quicksort(arr,0,len(arr)-1)
+def partition(arr, low, high):
+    x = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= x:
+            i += 1
+            swap(arr, i, j)
+    swap(arr, i+1, high)
+    return i+1
+
+def swap(arr, a, b):
+    t = arr[a]
+    arr[a] = arr[b]
+    arr[b] = t
+
+arr = [4,20,14,1,15,3,33,5]
+quicksort(arr, 0, len(arr)-1)
 print(arr)
